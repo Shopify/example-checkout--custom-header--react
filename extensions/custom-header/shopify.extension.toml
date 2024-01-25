@@ -18,6 +18,10 @@ handle = "custom-header"
 module = "./src/Checkout.jsx"
 target = "purchase.checkout.header.render-after"
 
+[[extensions.targeting]]
+module = "./src/ThankYou.jsx"
+target = "purchase.thank-you.header.render-after"
+
 [extensions.capabilities]
 # Gives your extension access to directly query Shopify’s storefront API.
 # https://shopify.dev/docs/api/checkout-ui-extensions/unstable/configuration#api-access
