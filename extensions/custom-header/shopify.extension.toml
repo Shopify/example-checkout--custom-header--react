@@ -14,6 +14,7 @@ handle = "custom-header"
 # and the file that contains your extension’s source code. Learn more:
 # https://shopify.dev/docs/api/checkout-ui-extensions/unstable/extension-targets-overview
 
+#[START custom-header.config-ext-point]
 [[extensions.targeting]]
 module = "./src/Checkout.jsx"
 target = "purchase.checkout.header.render-after"
@@ -21,6 +22,7 @@ target = "purchase.checkout.header.render-after"
 [[extensions.targeting]]
 module = "./src/ThankYou.jsx"
 target = "purchase.thank-you.header.render-after"
+#[END custom-header.config-ext-point]
 
 [extensions.capabilities]
 # Gives your extension access to directly query Shopify’s storefront API.
