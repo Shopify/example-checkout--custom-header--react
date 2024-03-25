@@ -10,8 +10,8 @@ import {
   useShop,
 } from '@shopify/ui-extensions-react/checkout';
 
-// [START custom-header.render]
 export default function Extension() {
+  // [START custom-header.buyer-journey]
   const steps = useBuyerJourneySteps();
   const activeStep = useBuyerJourneyActiveStep();
   const {storefrontUrl, name} = useShop();
@@ -19,7 +19,9 @@ export default function Extension() {
   const activeStepIndex = steps.findIndex(
     ({handle}) => handle === activeStep?.handle,
   );
+  // [END custom-header.buyer-journey]
 
+  // [START custom-header.render]
   return (
     // Replace the image source with your own image url. Learn more:
     // https://help.shopify.com/en/manual/shopify-admin/productivity-tools/file-uploads
@@ -52,5 +54,5 @@ export default function Extension() {
       </InlineLayout>
     </BlockStack>
   );
+  // [END custom-header.render]
 }
-// [END custom-header.render]
