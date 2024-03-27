@@ -56,7 +56,9 @@ export default function Extension() {
             background={
               activeStep?.handle === handle ? 'subdued' : 'transparent'
             }>
-            {index >= activeStepIndex ? (
+            {index < activeStepIndex || handle === 'cart' ? (
+              <Link to={to}>{label}</Link>
+            ) : (
               <Text
                 emphasis={activeStep?.handle === handle ? 'bold' : undefined}
                 appearance={
@@ -64,8 +66,6 @@ export default function Extension() {
                 }>
                 {label}
               </Text>
-            ) : (
-              <Link to={to}>{label}</Link>
             )}
           </View>
           {index < assembledSteps.length - 1 ? (
