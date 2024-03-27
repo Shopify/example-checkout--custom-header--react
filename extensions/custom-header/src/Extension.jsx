@@ -1,4 +1,5 @@
 import {
+  Divider,
   InlineLayout,
   Link,
   Text,
@@ -6,44 +7,69 @@ import {
   useBuyerJourneySteps,
   useBuyerJourneyActiveStep,
   useShop,
+  useTranslate,
 } from '@shopify/ui-extensions-react/checkout';
 
 export default function Extension() {
   // [START custom-header.buyer-journey]
   const steps = useBuyerJourneySteps();
   const activeStep = useBuyerJourneyActiveStep();
-  const {storefrontUrl, name} = useShop();
+  const {storefrontUrl} = useShop();
+  const translate = useTranslate();
 
   const activeStepIndex = steps.findIndex(
     ({handle}) => handle === activeStep?.handle,
   );
+
+  const assembledSteps = [
+    {label: translate('cart'), handle: 'cart', to: `${storefrontUrl}cart`},
+    ...steps,
+  ];
   // [END custom-header.buyer-journey]
 
   // [START custom-header.render]
   return (
-    <InlineLayout accessibilityRole="orderedList" spacing="tight">
-      <View
-        accessibilityRole="listItem"
-        inlineAlignment="center"
-        border="base"
-        padding="base"
-        background="base">
-        <Link to={storefrontUrl}>{name}</Link>
-      </View>
-      {steps.map(({label, handle, to}, index) => (
-        <View
+    <InlineLayout
+      accessibilityRole="orderedList"
+      spacing="none"
+      maxInlineSize="fill"
+      border="base"
+      padding="none"
+      cornerRadius="base">
+      {assembledSteps.map(({label, handle, to}, index) => (
+        <InlineLayout
           accessibilityRole="listItem"
-          inlineAlignment="center"
+          inlineAlignment="end"
+          blockAlignment="center"
           key={handle}
-          border="base"
-          padding="base"
-          background={activeStep?.handle === handle ? 'subdued' : 'base'}>
-          {activeStep?.handle === handle || index > activeStepIndex ? (
-            <Text>{label}</Text>
-          ) : (
-            <Link to={to}>{label}</Link>
-          )}
-        </View>
+          spacing="none"
+          columns={['fill', 'auto']}>
+          <>
+            {activeStep.handle === handle || index > activeStepIndex ? (
+              <>
+                <View
+                  inlineAlignment="center"
+                  minInlineSize="100%"
+                  padding="extraTight"
+                  background={
+                    activeStep?.handle === handle ? 'subdued' : 'transparent'
+                  }>
+                  <Text
+                    emphasis={
+                      activeStep?.handle === handle ? 'bold' : undefined
+                    }>
+                    {label}
+                  </Text>
+                </View>
+              </>
+            ) : (
+              <View inlineAlignment="center" minInlineSize="100%">
+                <Link to={to}>{label}</Link>
+              </View>
+            )}
+            {index < steps.length ? <Divider direction="block" /> : null}
+          </>
+        </InlineLayout>
       ))}
     </InlineLayout>
   );
