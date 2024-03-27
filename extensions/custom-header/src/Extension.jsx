@@ -17,14 +17,14 @@ export default function Extension() {
   const {storefrontUrl} = useShop();
   const translate = useTranslate();
 
-  const activeStepIndex = steps.findIndex(
-    ({handle}) => handle === activeStep?.handle,
-  );
-
   const assembledSteps = [
     {label: translate('cart'), handle: 'cart', to: `${storefrontUrl}cart`},
     ...steps,
   ];
+
+  const activeStepIndex = assembledSteps.findIndex(
+    ({handle}) => handle === activeStep?.handle,
+  );
   // [END custom-header.buyer-journey]
 
   // [START custom-header.render]
@@ -44,31 +44,33 @@ export default function Extension() {
           key={handle}
           spacing="none"
           columns={['fill', 'auto']}>
-          <>
-            {activeStep.handle === handle || index > activeStepIndex ? (
-              <>
-                <View
-                  inlineAlignment="center"
-                  minInlineSize="100%"
-                  padding="extraTight"
-                  background={
-                    activeStep?.handle === handle ? 'subdued' : 'transparent'
-                  }>
-                  <Text
-                    emphasis={
-                      activeStep?.handle === handle ? 'bold' : undefined
-                    }>
-                    {label}
-                  </Text>
-                </View>
-              </>
+          <View
+            inlineAlignment="center"
+            minInlineSize="100%"
+            padding="extraTight"
+            cornerRadius={
+              index === assembledSteps.length - 1
+                ? ['none', 'base', 'base', 'none']
+                : 'none'
+            }
+            background={
+              activeStep?.handle === handle ? 'subdued' : 'transparent'
+            }>
+            {index >= activeStepIndex ? (
+              <Text
+                emphasis={activeStep?.handle === handle ? 'bold' : undefined}
+                appearance={
+                  activeStep?.handle !== handle ? 'subdued' : undefined
+                }>
+                {label}
+              </Text>
             ) : (
-              <View inlineAlignment="center" minInlineSize="100%">
-                <Link to={to}>{label}</Link>
-              </View>
+              <Link to={to}>{label}</Link>
             )}
-            {index < steps.length ? <Divider direction="block" /> : null}
-          </>
+          </View>
+          {index < assembledSteps.length - 1 ? (
+            <Divider direction="block" />
+          ) : null}
         </InlineLayout>
       ))}
     </InlineLayout>
