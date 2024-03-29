@@ -18,7 +18,7 @@ export default function Extension() {
   const translate = useTranslate();
 
   const assembledSteps = [
-    {label: translate('cart'), handle: 'cart', to: `${storefrontUrl}cart`},
+    {label: translate('cart'), handle: 'cart', to: new URL('/cart', storefrontUrl).href},
     ...steps,
   ];
 
