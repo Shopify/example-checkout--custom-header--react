@@ -3,7 +3,7 @@
 
 # The version of APIs your extension will receive. Learn more:
 # https://shopify.dev/docs/api/usage/versioning
-api_version = "2024-01"
+api_version = "2024-04"
 
 [[extensions]]
 type = "ui_extension"
@@ -18,10 +18,6 @@ handle = "custom-header"
 [[extensions.targeting]]
 module = "./src/Checkout.jsx"
 target = "purchase.checkout.header.render-after"
-
-[[extensions.targeting]]
-module = "./src/ThankYou.jsx"
-target = "purchase.thank-you.header.render-after"
 #[END custom-header.config-ext-point]
 
 [extensions.capabilities]
